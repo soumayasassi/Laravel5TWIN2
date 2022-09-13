@@ -16,3 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/page1', function () {
+    return "<h1> first page </h1>";
+});
+
+
+Route::get('/page2/{name?}', function ($name=null) {
+    return "<h1> Welcome  $name  </h1>";
+})->where('name', '[A-Za-z]+');
+
+
+Route::get('/page3/{id?}', function ($id=null) {
+    return "<h1> user Number $id   </h1>";
+})->where('id', '[0-9]+');
+
+Route::get('/home', [\App\Http\Controllers\HomeController::class , 'index'] );
+Route::get('/show/{name}', [\App\Http\Controllers\HomeController::class , 'show'] );
