@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
@@ -33,3 +33,15 @@ Route::get('/page3/{id?}', function ($id=null) {
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class , 'index'] );
 Route::get('/show/{name}', [\App\Http\Controllers\HomeController::class , 'show'] );
+Route::get('/form', [\App\Http\Controllers\HomeController::class , 'form'] );
+Route::get('/result', function(\Symfony\Component\HttpFoundation\Request $request)
+{return $request->pseudo ;
+}) ;
+Route::middleware([\App\Http\Middleware\VerifAge::class])->group(function()
+{
+    Route::get('/result2/{age}', function(\Symfony\Component\HttpFoundation\Request $request)
+    {
+        return $request->age ;
+    });
+
+}) ;

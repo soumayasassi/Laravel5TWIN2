@@ -18,4 +18,8 @@ class HomeController extends Controller
         //return view('show', compact('name'));
         return view('show', ['name'=> $name]);
     }
+    public function form()
+    {
+        return view('form');
+    }
 }
