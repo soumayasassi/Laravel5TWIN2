@@ -45,3 +45,4 @@ Route::middleware([\App\Http\Middleware\VerifAge::class])->group(function()
     });
 
 }) ;
+Route::resource('product',\App\Http\Controllers\ProductController::class);
