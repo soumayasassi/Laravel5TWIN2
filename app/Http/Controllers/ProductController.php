@@ -86,9 +86,10 @@ class ProductController extends Controller
         $product = ['name'=>$request->name,'description'=>$request->description,
             'price'=>$request->price,
             'stock'=>$request->stock];
+
         Product::whereId($id)->update($product) ;
-        return  redirect()->route('product.index')
-            ->with('info','Product updated successfully.');
+        return  redirect()->route('product.index') ;
+           // ->with('info','Product updated successfully.');
 
     }
 
