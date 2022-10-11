@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
+use App\Models\Catalogue;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +31,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('Product.create');
+        $categories = Category::all();
+        $catalogues = Catalogue::all();
+        return view('Product.create', compact('categories',
+            'catalogues'));
     }
 
     /**
@@ -37,13 +43,31 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+
+
+    public function store(ProductRequest $request)
     {
-      //  $validated= $request->validated();
+
+
+
+        $validated=$request->validated();
         $product = Product::create($request->all());
-        //$product->category_id  = $request->category_id;
-       // $product->catalogues()->attach($request->cats);
-        return redirect()->route('product');
+
+        /*$product = new Product([
+            "name" => $request->get('name'),
+            "description" => $request->get('description'),
+            "price" => $request->get('price'),
+            "stock" => $request->get('stock'),
+        ]);*/
+
+        $product->category_id  = $request->category_id;
+        $product->catalogues()->attach($request->cats);
+
+        return redirect()->route('product.index');
+
+
+
     }
 
     /**
@@ -71,7 +95,6 @@ class ProductController extends Controller
 
         return view('Product.edit', compact('product'));
 
-       // return view('Product.edit', ["product"=> $product]);
     }
 
     /**
@@ -86,10 +109,9 @@ class ProductController extends Controller
         $product = ['name'=>$request->name,'description'=>$request->description,
             'price'=>$request->price,
             'stock'=>$request->stock];
-
         Product::whereId($id)->update($product) ;
-        return  redirect()->route('product.index') ;
-           // ->with('info','Product updated successfully.');
+        return  redirect()->route('product.index')
+            ->with('info','Product updated successfully.');
 
     }
 

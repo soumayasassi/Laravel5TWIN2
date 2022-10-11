@@ -27,6 +27,7 @@
                             <td>{{$product->description}}</td>
                             <td>{{$product->price}}</td>
                             <td>{{$product->stock}}</td>
+
                             <td>
                                 <a class="btn btn-outline-success" href="{{ route('product.show',$product->id) }}">
                                     Détails</a>
